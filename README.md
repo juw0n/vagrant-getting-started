@@ -95,6 +95,11 @@ for list content in the VM directory just use `ls`
 
 With synced folders, You can keep using your own editor on your host machine and have the files sync into the guest machine
 
+you can reload to vagrant environment to effect some changes using
+```
+vagrant reload
+```
+
 ### Share an environment
 Vagrant makes it easy to share and collaborate on development environments (VM). The primary feature to do this in Vagrant is called `Vagrant Share`.
 
@@ -134,3 +139,16 @@ A halted guest machine will take more time to start from a cold boot and will st
 It takes even longer to bring a machine up once you destroy it, and the machine's state will not be saved.
 
 **Again, when you are ready to work again, just issue a vagrant up.**
+
+### Networking and Configuring port forwarding in vagrant
+You can designate which ports on the guest computer to share via a host port by using `port forwarding`. By doing this, you can access a port on your own computer while having all network traffic routed to a designated port on the guest computer.
+
+To set up a forwarded port so you can access Apache on your guest, add the config.vm.network parameter to your Vagrantfile. 
+Adding the config.vm.network argument to your Vagrantfile will allow you to set up a forwarded port so you can access Apache on your guest. for example:
+```
+config.vm.network :forwarded_port, guest: 80, host: 4567
+```
+This configuration connect port 80 on the guest machine(VM) to port 4567 on the host machine. 
+Reload the vagrant so the changes can take effect.
+
+Once the machine has loaded, you can access the contecnt via http://127.0.0.1:4567 on the host browser. 
